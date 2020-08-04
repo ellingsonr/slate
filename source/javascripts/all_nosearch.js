@@ -8,20 +8,20 @@ function adjustLanguageSelectorWidth() {
   elem.width(elem.parent().width());
 }
 
-$(function() {
-  loadToc($('#toc'), '.toc-link', '.toc-list-h2', 10);
+$(function () {
+  loadToc($('#toc'), '.toc-link', '.toc-list-h2, .toc-list-h3, .toc-list-h4', 10);
   setupLanguages($('body').data('languages'));
-  $('.content').imagesLoaded( function() {
+  $('.content').imagesLoaded(function () {
     window.recacheHeights();
     window.refreshToc();
   });
 
-  $(window).resize(function() {
+  $(window).resize(function () {
     adjustLanguageSelectorWidth();
   });
   adjustLanguageSelectorWidth();
 });
 
-window.onpopstate = function() {
+window.onpopstate = function () {
   activateLanguage(getLanguageFromQueryString());
 };
