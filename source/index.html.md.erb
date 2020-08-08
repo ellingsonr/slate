@@ -1,0 +1,47 @@
+---
+title: API Reference
+
+language_tabs: # must be one of https://git.io/vQNgJ
+  - python
+
+# toc_footers:
+#   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+
+includes:
+  - key_definitions.md
+  - node_classes.md
+
+search: true
+
+code_clipboard: true
+---
+
+# Introduction
+
+Algebruh is a human driven symbolic solver. It presents an user with an expression as well as all the possible mathematical operation they can apply to it. The user then applies the desired operations via a user interface using drag and drop interactions.
+
+## How it works
+
+Algebruh expresses mathematical statements and equations (aslo known as mathematical expressions) as [Astract Syntax Trees](#AST) (AST). ASTs are commonly used in applications where the analysis and mutation of the structure of expressions is needed; applications such as compilers, interpreters and symbolic solvers.
+Given the expression `x = 3 - 1` an AST could look like this:
+
+<%= image_tag "./images/intro_graph_1.png" %>
+
+If we were to compile this code as is, everytime the executalbe code were to be run, it need to resolve `3 - 1`. This would always yeild a value of `2` and thus we can modify the AST to reflect that. 
+
+<%= image_tag "./images/intro_graph_2.png" %>
+
+This a fairly trivial calculation, but the same logic holds for more complex ASTs. The difference between a compiler and symbolic solver with regards to AST rewriting is that is the objective. Compilers rewrite ASTs for the sake of optimisation and translation. Symbolic solvers rewrite ASTs in order to solve mathematical problems. The AST rewrite above is an example a symbolic solver `simplifying` an expression. They can do far more impressive operations such `factorization`, `intergration`, `differentiation`, `root finding`, etc.
+If you're unfamiliar with symbolic solvers, checkout [Wolfram Alpha](https://www.wolframalpha.com/) and [SymPy](https://www.sympy.org/en/index.html). Understanding the basics of SymPy is especially important as it's used quite heavily in Alegbruh.
+
+
+## Why Algebruh?
+
+So you've checked out Wolfram Alpha and SymPy. Wolfram Alpha's natural language processing combined with it's ease of use makes it an incredible tool for analysis mathematical ideas and problems. SymPy is a bit harder to use, requiring a working knowledge of Python, but it's free and open source. So why build Algebruh?
+
+If solving a maths problem by hand (on a chalk board or piece of paper) were to be likened to painting a landscape, we can see several similarities. Both processes highly expressve, the only only limit is the medium. They are also quite laborious - nothing comes for free; everything is done by the person performing the act. They are both highly error prone - it's as easy to drop a coefficient as it is to place an incorrect brush stroke.
+
+Similarly, solving a maths problem by using a calculator or symbolic solver like Wolfram Alpha can be likened to photographing a landscape. There is still some degree of expression in terms of setting up the conditions of the process, but with a click of button, the result is produced. The amount of effort is far less than the manual equivalents layed out before. There is no place for human error in production of the result.
+
+Algebruh is to maths what is photoshop is to visual art. It's allows mathematical modelling as expressive as that donne on a chalk board while being as accurate and quick as modelling done with a symbolic solver. And in doing so it aims to allow leaners and accomplished mathimaticians to easily, quickly and accurately express themselves.
+
