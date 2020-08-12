@@ -34,9 +34,9 @@ result = container_to_sym(container_id, nodes)
 result
 > -32*a*b*c + 54*x*y*z
 ```
-Converts an Algebruh [container](#container) into a SymPy expression. If the container has multiple [terms](#term), the root node of the SymPy expression will be an Add node. The first parameter is the ID of the container.
+Converts an Algebruh [container](#container) into a SymPy expression. If the container has multiple [terms](#term), the root node of the SymPy expression will be an Add node. The first argument is the ID of the container.
 
-Parameter | Type | Default Value 
+Argument | Type | Default Value 
 --------- | ---- | -------------
 [node_id](#nid)        | string          | required
 [nodes](#nodes)        | dict            | required 
@@ -51,9 +51,9 @@ result = term_to_sym(term_id, nodes)
 result
 > -32*a*b*c
 ```
-Converts an Algebruh [term](#term) into a SymPy expression. If the term has multiple term factors, the root node of the SymPy expression will be an Mul node. The first parameter is the ID of the term.
+Converts an Algebruh [term](#term) into a SymPy expression. If the term has multiple term factors, the root node of the SymPy expression will be an Mul node. The first argument is the ID of the term.
 
-Parameter | Type | Default Value 
+Argument | Type | Default Value 
 --------- | ---- | -------------
 [node_id](#nid)        | string          | required
 [nodes](#nodes)        | dict            | required 
@@ -66,9 +66,9 @@ result = term_factor_to_sym(constant.nid, nodes)
 result
 > 123
 ```
-Converts an Algebruh [term factor](#term-factor) into a SymPy expression. The first parameter is the ID of the term.
+Converts an Algebruh [term factor](#term-factor) into a SymPy expression. The first argument is the ID of the term.
 
-Parameter | Type | Default Value 
+Argument | Type | Default Value 
 --------- | ---- | -------------
 [node_id](#nid)        | string          | required
 [nodes](#nodes)        | dict            | required 
@@ -103,9 +103,9 @@ LINE TERM(-) CONSTANT(32)
 """
 ```
 
-Converts a SymPy expression into an Algebruh [container](#container). The first parameter is a SymPy Add node.
+Converts a SymPy expression into an Algebruh [container](#container). The first argument is a SymPy Add node.
 
-Parameter | Type | Default Value 
+Argument | Type | Default Value 
 --------- | ---- | -------------
 sym_expression         | SypPy Expression | required
 use_brackets           | boolean          | required
@@ -134,9 +134,9 @@ TERM(-) CONSTANT(32)
         PARAMETER(c)
 """
 ```
-Converts a SymPy expression into an Algebruh [term](#term). The first parameter is a SymPy Mul node.
+Converts a SymPy expression into an Algebruh [term](#term). The first argument is a SymPy Mul node.
 
-Parameter | Type | Default Value 
+Argument | Type | Default Value 
 --------- | ---- | -------------
 sym_expression         | SypPy Expression | required
 [nodes](#nodes)        | dict             | required
@@ -158,7 +158,48 @@ CONSTANT(123)
 ```
 Converts a SymPy expression into an Algebruh [term factor](#term-factor).
 
-Parameter | Type | Default Value 
+Argument | Type | Default Value 
 --------- | ---- | -------------
 sym_expression         | SypPy Expression | required
 [nodes](#nodes)        | dict             | required
+
+
+
+## Substitution
+
+Substitution converts a sub section of an tree into a SymPy expression. Only the converted parts of the sub tree will be evaluated. For a given a node id, it will be converted to a SymPy Symbol node. If more of the sub tree needs to be converted, the push argument should be used. The push argument is a list of descendants of the node id used as the first argument. 
+
+<aside class="notice">
+For the <code/>push</code> list to be consumed correctly, the node ids listed need to form a contiguous sub tree from the node id provided as the first argument.
+</aside>
+
+The nodes are given the symbol `x_1`, `x_2` ... `x_n` for n node ids that are to be converted.
+The `lookup` argument is a dict that is populated by the substitution functions. It maps the the `x_i` Symbol symbol to it's corresponding Algebruh sub tree. This is used to convert the SymPy expression back to an Algebruh expression.
+
+The following shows a tree with a single node selected for substitution. In this case, it aslo happens to be the [root node](#root). Notice how the SymPy expression returns a single Symbol node.
+
+```python
+container_id, nodes = tokenizer.generate_tree("-32 * a * b * c")
+lookup = {}
+sym = sub_expression(container_id, None, lookup, nodes)
+sym
+> x_1
+```
+<%= image_tag "./images/sub_graph_1.png" %>
+
+
+blah
+
+```python
+container_id, nodes = tokenizer.generate_tree("-32 * a * b * c")
+lookup = {}
+sym = sub_expression(container_id, None, lookup, nodes)
+sym
+> x_1
+```
+
+<%= image_tag "./images/sub_graph_2.png" %>
+
+blah 
+
+<%= image_tag "./images/sub_graph_3.png" %>
